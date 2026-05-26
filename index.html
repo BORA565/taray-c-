@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureWeb - Gizlilik Odaklı Tarayıcı</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .lock-icon {
+            font-size: 1.2em;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            padding: 50px;
+        }
+
+        .section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+        }
+
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            padding: 12px 0;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-list li::before {
+            content: "✓";
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.2em;
+            width: 25px;
+            height: 25px;
+            background: #e8f0ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .browser-demo {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .browser-header {
+            background: #f0f0f0;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .browser-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-circle {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .btn-red {
+            background: #ff5f56;
+        }
+
+        .btn-yellow {
+            background: #ffbd2e;
+        }
+
+        .btn-green {
+            background: #27c93f;
+        }
+
+        .address-bar {
+            flex: 1;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .browser-content {
+            padding: 30px;
+            min-height: 300px;
+            background: white;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .stat-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #667eea;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .buttons-section {
+            grid-column: 1 / -1;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #f8f9fa;
+        }
+
+        .info-box {
+            background: #f0f7ff;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 8px;
+            color: #333;
+        }
+
+        .info-box strong {
+            color: #667eea;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+                padding: 30px 20px;
+            }
+
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .buttons-section {
+                flex-direction: column;
+            }
+
+            .btn {
+                justify-content: center;
+                width: 100%;
+            }
+        }
+
+        .badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        footer {
+            background: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        .legal-notice {
+            font-size: 0.85em;
+            color: #999;
+            margin-top: 15px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><span class="lock-icon">🔒</span> SecureWeb Browser</h1>
+            <p>Gizliliğe Odaklanmış, Hızlı ve Güvenli Tarayıcı Uygulaması</p>
+        </header>
+
+        <div class="content">
+            <!-- Sol Bölüm: Özellikler -->
+            <div class="section">
+                <h2>🎯 Ana Özellikler</h2>
+                <ul class="feature-list">
+                    <li>End-to-End Şifreleme</li>
+                    <li>Kimlik Gizleme (Privacy Mode)</li>
+                    <li>Otomatik İzleyici Engelleme</li>
+                    <li>HTTPS Enforced</li>
+                    <li>Yerel Depolama (Local Storage)</li>
+                    <li>DNS Gizliliği Desteği</li>
+                    <li>Tarayıcı Geçmişi Şifreleme</li>
+                    <li>Reklam & Malware Engelleme</li>
+                </ul>
+            </div>
+
+            <!-- Sağ Bölüm: Teknik Detaylar -->
+            <div class="section">
+                <h2>⚙️ Teknik Özellikler</h2>
+                <ul class="feature-list">
+                    <li>Modern WebView Teknolojisi</li>
+                    <li>Lightweight & Hızlı</li>
+                    <li>Android 8.0+ Uyumluluğu</li>
+                    <li>Düşük RAM Kullanımı</li>
+                    <li>Açık Kaynak Kod</li>
+                    <li>Düzenli Güvenlik Güncellemeleri</li>
+                    <li>Veri Saklama Kontrolü</li>
+                    <li>İzin Yönetimi Transparency</li>
+                </ul>
+            </div>
+
+            <!-- Tarayıcı Önizlemesi -->
+            <div class="section">
+                <h2>📱 Tarayıcı Arayüzü Önizlemesi</h2>
+                <div class="browser-demo">
+                    <div class="browser-header">
+                        <div class="browser-buttons">
+                            <div class="btn-circle btn-red"></div>
+                            <div class="btn-circle btn-yellow"></div>
+                            <div class="btn-circle btn-green"></div>
+                        </div>
+                        <input type="text" class="address-bar" placeholder="🔒 https://example.com" />
+                    </div>
+                    <div class="browser-content">
+                        <h3 style="color: #667eea; margin-bottom: 15px;">Güvenli Tarayıcıya Hoşgeldiniz</h3>
+                        <p style="color: #666; line-height: 1.6;">
+                            Bu tarayıcı, gizliliğiniz ve güvenliğiniz için tasarlanmıştır. 
+                            Tüm bağlantılarınız şifrelidir ve izleyicilerden korunursunuz.
+                        </p>
+                        <div class="stats" style="margin-top: 20px; grid-template-columns: 1fr 1fr;">
+                            <div class="stat-box">
+                                <div class="stat-number">🛡️</div>
+                                <div class="stat-label">Güvenli</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-number">⚡</div>
+                                <div class="stat-label">Hızlı</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- İstatistikler -->
+            <div class="section">
+                <h2>📊 Performans İstatistikleri</h2>
+                <div class="stats">
+                    <div class="stat-box">
+                        <div class="stat-number">95%</div>
+                        <div class="stat-label">İzleyici Engelleme</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">2MB</div>
+                        <div class="stat-label">APK Boyutu</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">25ms</div>
+                        <div class="stat-label">Ortalama Yükleme</div>
+                    </div>
+                </div>
+
+                <div class="info-box" style="margin-top: 20px;">
+                    <strong>💡 Bilgi:</strong> Bu uygulama tüm yasal gerekliliklere uyar. 
+                    Kurumsal ağlarda yönetici onayı gerekli olabilir.
+                </div>
+            </div>
+
+            <!-- Butonlar -->
+            <div class="buttons-section">
+                <button class="btn btn-primary">
+                    📥 APK İndir
+                </button>
+                <button class="btn btn-secondary">
+                    📖 Dokümantasyon
+                </button>
+                <button class="btn btn-secondary">
+                    🔧 GitHub Kodu
+                </button>
+                <button class="btn btn-secondary">
+                    ⚖️ Yasal Şartlar
+                </button>
+            </div>
+        </div>
+
+        <footer>
+            <p><strong>SecureWeb Browser v1.0</strong></p>
+            <p>Açık Kaynak Gizlilik Tarayıcısı</p>
+            
+            <div class="legal-notice">
+                <p><strong>⚖️ Yasal Uyarı:</strong></p>
+                <p>Bu uygulama yasal, yasal ve etik kurallar çerçevesinde geliştirilmiştir. 
+                Herhangi bir yasadışı aktiviteyi desteklemez. Kullanıcılar tüm uygulanabilir yasalar ve 
+                ağ politikalarına uymalıdır. Geliştirici, bu uygulamanın kötü amaçlı kullanımından sorumlu değildir.</p>
+                
+                <p style="margin-top: 10px;">Lisans: Apache 2.0 | © 2024 SecureWeb Project | Gizlilik Politikası</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
